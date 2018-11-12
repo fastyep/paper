@@ -1,6 +1,63 @@
 <html>
-<body>
-<h1>Test</h1>
 
+<head>
+    <link href="site.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+
+<body>
+    <section id="app">
+        <div class="page">
+            <div class="paper left">
+                <h1>Paper Oni</h1>
+                <h4>ウクライナへの栄光</h4>
+                <h2 v-if="squares">
+                    <span style="color: red" :class="sk.st?'dang':''">{{squares.filter(x=>x.nd==false).length}}</span>
+                    <span>{{(squares.filter(x=>x.nd==false).length == squares.filter(x=>x.nd).length ? ':' : 
+                            squares.filter(x=>x.nd==false).length  > squares.filter(x=>x.nd).length ? '>' : '<')}}</span>
+                    <span style="color: blue" :class="sk.nd?'dang':''">{{squares.filter(x=>x.nd).length}}</span>
+                </h2>
+                <div v-if="space" style="height: 171px;padding: 20px;">
+                    <div>{{space.x}}</div>
+                    <div class="border" style="display: inline-block;">
+                        <div v-for="i in 1, space.y">
+                            <div :class="'square ' + (nd ? 'blue' : nd == false ? 'red' : '' )" v-for="i in 1, space.x"></div>
+                        </div>
+                    </div>
+                    <div style="display: inline-block;">{{space.y}}</div>
+                </div>
+                <button @click="rot">развернуть</button>
+                <button @click="skip">пропустить ход</button>
+            </div>
+            <div class="paper right">
+                <h2>Правила</h2>
+                    <li>Разместите на поле сгенерированный прямоугольник.</li>
+                    <li>Прямоугольник можно вращать</li>
+                    <li>Прямоугольник должен быть присоединён к вашей существующей территории.</li>
+                    <li>Первый прямоугольник игрока помещается в угол, прямоугольник соперника - в противоположный.</li>
+                    <li>Вы можете по своему желанию пропустить ход.</li>
+                    <li>Игра считается оконченной, когда оба игрока пропустили ход.</li>
+                    <li>Побеждает тот, у кого большая территория.</li>
+            </div>
+            <div :class="'border ' + (nd ? 'blue' : nd == false ? 'red' : '' )" @mouseleave="cursor = null">
+                <div v-for="line in lines">
+                    <div :class="'square'+(cell.nd ? ' blue' : (cell.nd == false ? ' red' : ''))" @mouseover="cursor = cell" @click="click(cell)"
+                        v-for="cell in line"></div>
+                </div>
+                <div v-if="space && cursor" class="ghost" :style="'width: '+(space.x*22)+'px;height: '+(space.y*22)+'px;top: '+((cursor.y*22)+22)+'px;left: '+((cursor.x*22)+22)+'px;'"></div>
+            </div>
+        </div>
+        <transition name="fade">
+            <div class="page border" v-if="squares && nd == null">
+                <h1 v-if="squares.filter(x=>x.nd==false).length > squares.filter(x=>x.nd).length"><span style="color: red">RED ONI</span> WINS</h1>
+                <h1 v-if="squares.filter(x=>x.nd==false).length < squares.filter(x=>x.nd).length"><span style="color: blue">BLUE ONI</span> WINS</h1>
+                <h1 v-if="squares.filter(x=>x.nd==false).length == squares.filter(x=>x.nd).length">DRAW</h1>
+                <br>
+                <button @click="game">ещё партейку</button>
+            </div>
+        </transition>
+    </section>
+    <script src="main.js"></script>
 </body>
+
 </html>

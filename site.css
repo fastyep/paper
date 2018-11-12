@@ -1,0 +1,75 @@
+* {
+    margin: 0;
+    font-family: -apple-system, 'BlinkMacSystemFont', 'Roboto', 'Segoe UI', 'Helvetica', 'Ubuntu', 'Cantarell', 'Arial', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+    font-weight: normal;
+    text-align: center;
+}
+body {
+    background: rgb(200, 200, 200);
+}
+.page {
+    background: white;
+    padding: 20px;
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+.paper {
+    position: absolute;
+    background: white;
+    padding: 20px;
+    top: 0;
+}
+.paper.left {
+    width: 300px;
+    left: -360px;
+}
+.paper.right {
+    width: 420px;
+    right: -480px;
+}
+.border {
+    display: inline-block;
+    border: 1px solid black;
+}
+.square {
+    width: 20px;
+    height: 20px;
+    border: 1px solid black;
+    display: inline-block;
+    cursor: none;
+}
+.red .ghost {
+    background: rgba(255, 0, 0, .5);
+}
+.blue .ghost {
+    background: rgba(0, 0, 255, .5);
+}
+
+.square.red {
+    background: red;
+}
+
+.square.blue {
+    background: blue;
+}
+
+.ghost {
+    z-index: -1;
+    position: absolute;
+}
+
+.dang {
+    text-decoration: underline;
+}
+.fade-enter-active, .fade-leave-active {
+    transition: opacity .5s;
+  }
+  .fade-enter, .fade-leave-to /* .fade-leave-active до версии 2.1.8 */ {
+    opacity: 0;
+  }
+  .page.border {      
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+  }
