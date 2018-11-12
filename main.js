@@ -47,10 +47,7 @@ let app = new Vue({
                 }
                 return false;
             }
-            if (!(cell.x == 0 && cell.y == 0 && nd == false) &&
-                !(cell.x == lines[0].length - space.x && cell.y == lines.length - space.y && nd) &&
-                !subX(-1) && !subY(-1) &&
-                !subX(space.y) && !subY(space.x))
+            if (!subX(-1) && !subY(-1) && !subX(space.y) && !subY(space.x))
                 return;
             for (let y = 0; y < space.y; y++) {
                 for (let x = 0; x < space.x; x++) {
@@ -92,13 +89,13 @@ let app = new Vue({
             this.space.x = this.space.y;
             this.space.y = tmp;
         },
-        game: function() {
+        game: function () {
             this.nd = true;
             this.lines = new Array(this.sheet.y).fill().map((u, y) => new Array(this.sheet.x).fill().map((i, x) => ({ x, y, nd: null })));
             this.squares = this.lines.reduce(function (a, b) { return a.concat(b); });
             this.move();
-            this.click(this.squares[0]);
-            this.click(this.lines[this.lines.length - this.space.y][this.lines[0].length - this.space.x]);
+            this.squares[0].nd = false;
+            this.squares[this.squares.length - 1].nd = true;
         }
     },
     mounted: function () {
